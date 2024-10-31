@@ -5,35 +5,107 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ConnectOcean</title>
         <link rel="stylesheet" href="style.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <style>
+            #imageOverlay, #textOverlay {
+                opacity: 0;
+                visibility: hidden;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1000;
+                transition: opacity 0.3s ease-in-out;
+            }
+            
+            #textOverlay {
+                background: none;
+                padding: 40px;
+                border-radius: 8px;
+                max-width: 600px;
+                text-align: left;
+                color: white;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 300;
+                font-size: 15px;
+            }
+
+            #textOverlay.active ~ .coming-soon-box,
+            .coming-soon-box {
+                opacity: 1;
+                transition: opacity 0.3s ease;
+            }
+
+            #imageOverlay.visible, 
+            #textOverlay.visible,
+            #overlayToggle:checked ~ .container #textOverlay {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            #overlayToggle,
+            #imageToggle {
+                display: none;
+            }
+
+            #textOverlay .close-button {
+                display: block;
+                margin: 20px auto 0;
+                width: fit-content;
+                padding: 8px 20px;
+                border: 1px solid white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            #textOverlay .close-button:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            #overlayToggle:checked ~ .container .coming-soon-box {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        </style>
     </head>
     <body>
+        <input type="checkbox" id="overlayToggle">
         <div class="container">
+            <div id="textOverlay">
+                <p>LIVE ACTIVITIES PROVIDE FREQUENT INFORMATION UPDATES THAT APPEAR IN GLANCEABLE LOCATIONS SUCH AS THE LOCK SCREEN, ON IPHONE IN STANDBY, AND THE DYNAMIC ISLAND. STARTING IN WATCHOS 11 AND IOS 18, LIVE ACTIVITIES ALSO APPEAR IN THE SMART STACK ON APPLE WATCH. FOR APPS WITH FREQUENT CONTENT AND STATUS UPDATES THAT GO BEYOND THE EXISTING PUSH NOTIFICATION SYSTEM, LIVE ACTIVITIES CAN BE A MORE FLEXIBLE WAY TO KEEP PEOPLE UPDATED ABOUT LIVE EVENTS, ACTIVITIES, OR TASKS OVER A COUPLE OF HOURS. IN ADDITION TO FREQUENTLY UPDATING DISPLAYED DATA, THEY OFFER A WAY FOR PEOPLE TO INTERACT WITH THE INFORMATION.
+                    <br><br>
+
+                    FOR EXAMPLE, THE LIVE ACTIVITY OF A FOOD DELIVERY APP MIGHT DISPLAY THE TIME REMAINING UNTIL YOUR ORDER ARRIVES; A SPORTS APP COULD PROVIDE LIVE IN-GAME INFORMATION FOR THEIR LIVE ACTIVITY; AND A WORKOUT APP COULD SHOW REAL TIME FITNESS METRICS AND OFFER INTERACTIVE CONTROLS TO PAUSE OR CANCEL THE WORKOUT.</p>
+                <label for="overlayToggle" class="close-button">Close</label>
+            </div>
+
             <div class="water-overlay">
                 <div class="water-bg"></div>
             </div>
 
             <nav>
                 <div class="logo">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
-                        <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
-                        <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
-                    </svg>
+                    
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                            <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                            <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                        </svg>
                     <span>ConnectOcean</span>
                 </div>
                 <div class="nav-links">
                     <a href="#about">About</a>
-                    <a href="#join">Join Us</a>
+                
                     <a href="#contact">Contact</a>
                 </div>
             </nav>
@@ -48,10 +120,12 @@
                     <div class="line"></div>
                     <div class="scroll-section">
                         <p>SCROLL DOWN</p>
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-45deg);">
-                            <path d="M7 13L12 18L17 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 6V18" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
-                        </svg>
+                        <label for="overlayToggle">
+                            <svg id="ARROW" width="400" height="400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-45deg); cursor: pointer;">
+                                <path d="M7 13L12 18L17 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 6V18" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+                            </svg>
+                        </label>
                     </div>
                 </div>
             </main>

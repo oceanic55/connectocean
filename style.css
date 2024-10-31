@@ -29,7 +29,7 @@ body {
 .water-bg {
     position: absolute;
     inset: 0;
-    background-image: url('img.jpg');
+    background-image: url('img/image1.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -80,9 +80,9 @@ nav {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 15px;
+    text-transform: uppercase;
+    color: white;
     text-decoration: none;
-    color: currentColor;
-    letter-spacing: 0.05em;
 }
 
 /* Hero Section */
@@ -255,9 +255,7 @@ main {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 15px;
-    letter-spacing: 0.05em;
-    margin: 0.5rem 0;
-    color: currentColor;
+    text-transform: uppercase;
 }
 
 .scroll-section {
@@ -271,12 +269,16 @@ main {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 15px;
-    letter-spacing: 0.1em;  /* Adjust letter spacing */
-    margin: 0;  /* Remove default margin */
+    text-transform: uppercase;
 }
 
 .scroll-section svg {
     width: 48px;  /* Size remains doubled */
     height: 48px;  /* Size remains doubled */
     stroke: currentColor;  /* Match the text color */
+}
+
+.line + .text-content {
+    margin-top: 40px; /* Adjust this value to get your desired spacing */
+    margin-bottom: 40px;
 }
