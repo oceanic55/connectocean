@@ -29,7 +29,7 @@ body {
 .water-bg {
     position: absolute;
     inset: 0;
-    background-image: url('img/image1.jpg');
+    background-image: url('image1.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
