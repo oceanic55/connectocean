@@ -1,0 +1,516 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apple-inspired typography and base styling */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+main {
+    width: 100%;
+}
+
+/* Hero section styling */
+.hero {
+    background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.hero-content {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #000000 0%, #434343 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 28px;
+    color: #86868b;
+    margin-bottom: 48px;
+    font-weight: 400;
+}
+
+/* Feature panels */
+.feature-panel {
+    padding: 100px 0;
+    width: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.feature-panel:nth-child(even) {
+    background-color: #f5f5f7;
+}
+
+.feature-content {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feature-panel h2 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.feature-panel h3 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 48px 0 24px;
+    text-align: center;
+}
+
+.feature-panel p {
+    font-size: 21px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #1d1d1f;
+}
+
+/* Image styling */
+.section-image-container {
+    width: 100%;
+    margin: 60px auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+.section-image,
+.media,
+.mediaright,
+.medialeft,
+.mediacenter {
+    width: 100%;
+    max-width: 980px;
+    height: auto;
+    margin: 40px auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Media positioning variants */
+.mediaright {
+    float: right;
+    margin-left: 24px;
+    margin-bottom: 24px;
+    margin-right: 0;
+    max-width: 300px;
+}
+
+.medialeft {
+    float: left;
+    margin-right: 24px;
+    margin-bottom: 24px;
+    margin-left: 0;
+    max-width: 300px;
+}
+
+.mediacenter {
+    margin: 48px auto;
+    float: none;
+    max-width: 980px;
+}
+
+/* Feature grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin: 60px auto;
+    max-width: 980px;
+    padding: 0 20px;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: scale(1.02);
+}
+
+.feature-item h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1d1d1f;
+    text-align: center;
+}
+
+.feature-item p {
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #1d1d1f;
+}
+
+/* Lists */
+ul, ol {
+    max-width: 780px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+ul li, ol li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #1d1d1f;
+}
+
+ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #86868b;
+}
+
+/* Code styling */
+code {
+    font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #1d1d1f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1068px) {
+    .hero h1 {
+        font-size: 48px;
+    }
+    
+    .subtitle {
+        font-size: 24px;
+    }
+    
+    .feature-panel h2 {
+        font-size: 40px;
+    }
+    
+    .feature-panel h3 {
+        font-size: 28px;
+    }
+    
+    .feature-content {
+        max-width: 692px;
+    }
+    
+    .feature-panel p {
+        font-size: 19px;
+    }
+    
+    .section-image,
+    .media,
+    .mediaright,
+    .medialeft,
+    .mediacenter {
+        max-width: 692px;
+    }
+    
+    .mediaright,
+    .medialeft {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 734px) {
+    .hero h1 {
+        font-size: 40px;
+    }
+    
+    .subtitle {
+        font-size: 21px;
+    }
+    
+    .feature-panel h2 {
+        font-size: 32px;
+    }
+    
+    .feature-panel h3 {
+        font-size: 24px;
+    }
+    
+    .feature-panel p {
+        font-size: 17px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-content {
+        max-width: none;
+        padding: 0 20px;
+    }
+    
+    ul, ol {
+        padding: 0 16px;
+    }
+    
+    .section-image,
+    .media,
+    .mediaright,
+    .medialeft,
+    .mediacenter {
+        max-width: 100%;
+        float: none;
+        margin: 30px auto;
+    }
+    
+    .mediaright,
+    .medialeft {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Animation effects */
+.section-image:hover,
+.media:hover,
+.mediaright:hover,
+.medialeft:hover,
+.mediacenter:hover {
+    transform: scale(1.02);
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-large {
+    margin-top: 80px;
+}
+
+.mb-large {
+    margin-bottom: 80px;
+}
+
+/* Additional content styling */
+.level3, .level4, .level5 {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Documentation sections */
+.sectionedit55, .sectionedit56, .sectionedit57,
+.sectionedit58, .sectionedit59, .sectionedit60,
+.sectionedit61, .sectionedit62, .sectionedit63,
+.sectionedit64, .sectionedit65, .sectionedit66,
+.sectionedit67, .sectionedit68, .sectionedit69,
+.sectionedit70, .sectionedit71, .sectionedit72,
+.sectionedit73, .sectionedit74, .sectionedit75,
+.sectionedit76, .sectionedit77, .sectionedit78,
+.sectionedit79, .sectionedit80, .sectionedit81,
+.sectionedit82, .sectionedit83, .sectionedit84,
+.sectionedit85, .sectionedit86, .sectionedit87,
+.sectionedit88, .sectionedit89, .sectionedit90,
+.sectionedit91, .sectionedit92, .sectionedit93,
+.sectionedit94, .sectionedit95, .sectionedit96,
+.sectionedit97, .sectionedit98, .sectionedit99,
+.sectionedit100, .sectionedit101, .sectionedit102,
+.sectionedit103, .sectionedit104, .sectionedit105,
+.sectionedit106, .sectionedit107, .sectionedit108,
+.sectionedit109, .sectionedit110, .sectionedit111 {
+    margin-top: 48px;
+    margin-bottom: 24px;
+}
+
+/* Links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #004499;
+    text-decoration: underline;
+}
+
+/* Clear floats */
+.level3::after,
+.level4::after,
+.level5::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Definition lists and details */
+.li {
+    margin-bottom: 12px;
+}
+
+/* Nested lists */
+ul ul, ul ol, ol ul, ol ol {
+    margin: 8px 0 8px 20px;
+}
+
+/* Code blocks */
+pre {
+    background: #f6f8fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    overflow-x: auto;
+    font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #e6e6e6;
+    text-align: left;
+}
+
+th {
+    background: #f5f5f7;
+    font-weight: 600;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 24px 0;
+    padding: 16px 24px;
+    border-left: 4px solid #0066cc;
+    background: #f5f5f7;
+    font-style: italic;
+}
+
+/* Responsive images in content */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Print styles */
+@media print {
+    .hero {
+        padding: 40px 0;
+    }
+    
+    .feature-panel {
+        page-break-inside: avoid;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+    
+    pre {
+        white-space: pre-wrap;
+    }
+}
+
+/* Accessibility improvements */
+.a11y {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* Focus states */
+a:focus,
+button:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #000;
+        color: #f5f5f7;
+    }
+    
+    .hero,
+    .feature-panel:nth-child(even) {
+        background-color: #1d1d1f;
+    }
+    
+    .feature-panel {
+        background-color: #000;
+    }
+    
+    .feature-item {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    code {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #f5f5f7;
+    }
+    
+    pre {
+        background: #1d1d1f;
+    }
+    
+    th {
+        background: #1d1d1f;
+    }
+    
+    blockquote {
+        background: #1d1d1f;
+    }
+}
