@@ -1,121 +1,60 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Sourdough Baking Schedule Mobile App</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
-        }
-        .iphone-frame {
-            width: 430px;
-            height: 884px;
-            background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
-            border-radius: 60px;
-            padding: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        .dynamic-island {
-            width: 120px;
-            height: 36px;
-            background: #000;
-            border-radius: 18px;
-            position: absolute;
-            top: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .screen {
-            width: 390px;
-            height: 844px;
-            background: #fff;
-            border-radius: 40px;
-            overflow-y: auto;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         .container {
             width: 100%;
-            max-width: 350px;
-            min-height: 700px;
-            text-align: center;
+            max-width: 390px;
+            padding: env(safe-area-inset-top, 20px) 20px 20px;
+            background: #fff;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             overflow-y: auto;
         }
         h1 {
             font-size: 1.5em;
             color: #333;
             margin: 0 0 20px;
+            text-align: center;
         }
         .step {
             margin-bottom: 20px;
+            width: 100%;
         }
         .step h2 {
             font-size: 1.2em;
             color: #333;
             margin: 0 0 10px;
+            text-align: center;
         }
         .step p {
             font-size: 0.9em;
             color: #666;
             line-height: 1.4;
             margin: 0 0 15px;
+            text-align: left;
         }
         .timer {
             font-size: 1em;
             color: #e74c3c;
             margin: 10px 0;
+            text-align: center;
         }
         button {
             background-color: #007aff;
@@ -128,6 +67,8 @@
             font-weight: 500;
             width: 100%;
             max-width: 200px;
+            margin: 0 auto;
+            display: block;
         }
         button:hover {
             background-color: #005bcb;
@@ -143,62 +84,81 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        /* Responsive adjustments */
+        @media (max-width: 390px) {
+            .container {
+                padding: env(safe-area-inset-top, 20px) 15px 15px;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+            .step h2 {
+                font-size: 1.1em;
+            }
+            .step p {
+                font-size: 0.85em;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+        @media (min-width: 391px) {
+            .container {
+                max-width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="iphone-frame">
-        <div class="dynamic-island"></div>
-        <div class="screen">
-            <div class="container">
-                <h1>Sourdough 82% Hydration</h1>
-                <div id="step-1" class="step">
-                    <h2>Day 1 – 10:00 PM: Make Levain</h2>
-                    <p>Make 90g levain. Rest until next morning.</p>
-                    <button onclick="startTimerForStep(1)">Start Timer</button>
-                </div>
-                <div id="step-2" class="step hidden">
-                    <h2>Day 2 – 9:00 AM: Mix Dough & Autolyse</h2>
-                    <p>In a warmed bowl, mix 90g levain with 230g water (33°C in winter, 23-26°C in summer for 28°C dough temp). Add 370g strong white flour, 30g rye flour. Rest dough at 23-28°C to hydrate flour and develop gluten. Cover with a wet cloth or use a proving box. (10 min mix + autolyse)</p>
-                    <div id="timer-2" class="timer"></div>
-                    <button onclick="startTimerForStep(2)">Start Timer</button>
-                </div>
-                <div id="step-3" class="step hidden">
-                    <h2>Day 2 – 11:00 AM: Add Salt & Bulk Fermentation</h2>
-                    <p>Sprinkle 8g salt over dough, add 25g reserved water, mix 2-3 mins. Add remaining 75g water incrementally (20g at a time), saving 20g for later. Stretch and fold dough 3 times at even intervals (3 x 4 stretches). Add inclusions on second-to-last fold. Dough should increase by 60% in volume.</p>
-                    <div id="timer-3" class="timer"></div>
-                    <button onclick="startTimerForStep(3)">Start Timer</button>
-                </div>
-                <div id="step-4" class="step hidden">
-                    <h2>Day 2 – 2:00 PM: Shape</h2>
-                    <p>Lightly flour surface, divide dough, preshape into boules, bench rest 20 mins.</p>
-                    <div id="timer-4" class="timer"></div>
-                    <button onclick="startTimerForStep(4)">Start Timer</button>
-                </div>
-                <div id="step-5" class="step hidden">
-                    <h2>Day 2 – 2:25 PM: Final Shape</h2>
-                    <p>Final shape, place seam-side up in floured banneton.</p>
-                    <div id="timer-5" class="timer"></div>
-                    <button onclick="startTimerForStep(5)">Start Timer</button>
-                </div>
-                <div id="step-6" class="step hidden">
-                    <h2>Day 2 – 4:30 PM: Prove</h2>
-                    <p>Prove at ambient temp (23-28°C) until ready, dough should be aerated and slightly risen.</p>
-                    <div id="timer-6" class="timer"></div>
-                    <button onclick="startTimerForStep(6)">Start Timer</button>
-                </div>
-                <div id="step-7" class="step hidden">
-                    <h2>Day 2 – 6:00 PM: Score & Bake</h2>
-                    <p>Score dough and bake at 180°C in Dutch oven for 1 hour. Remove lid, bake 5+ mins until deep golden. Cool on a wire rack.</p>
-                    <div id="timer-7" class="timer"></div>
-                    <button onclick="startTimerForStep(7)">Start Timer</button>
-                </div>
-                <div id="step-8" class="step hidden">
-                    <h2>Complete!</h2>
-                    <p>Your sourdough bread is ready! Enjoy!</p>
-                    <div id="timer-8" class="timer"></div>
-                    <button onclick="startTimerForStep(8)">Finish</button>
-                </div>
-            </div>
+    <div class="container">
+        <h1>Sourdough 82% Hydration</h1>
+        <div id="step-1" class="step">
+            <h2>Day 1 – 10:00 PM: Make Levain</h2>
+            <p>Make 90g levain. Rest until next morning.</p>
+            <button onclick="startTimerForStep(1)">Start Timer</button>
+        </div>
+        <div id="step-2" class="step hidden">
+            <h2>Day 2 – 9:00 AM: Mix Dough & Autolyse</h2>
+            <p>In a warmed bowl, mix 90g levain with 230g water (33°C in winter, 23-26°C in summer for 28°C dough temp). Add 370g strong white flour, 30g rye flour. Rest dough at 23-28°C to hydrate flour and develop gluten. Cover with a wet cloth or use a proving box. (10 min mix + autolyse)</p>
+            <div id="timer-2" class="timer"></div>
+            <button onclick="startTimerForStep(2)">Start Timer</button>
+        </div>
+        <div id="step-3" class="step hidden">
+            <h2>Day 2 – 11:00 AM: Add Salt & Bulk Fermentation</h2>
+            <p>Sprinkle 8g salt over dough, add 25g reserved water, mix 2-3 mins. Add remaining 75g water incrementally (20g at a time), saving 20g for later. Stretch and fold dough 3 times at even intervals (3 x 4 stretches). Add inclusions on second-to-last fold. Dough should increase by 60% in volume.</p>
+            <div id="timer-3" class="timer"></div>
+            <button onclick="startTimerForStep(3)">Start Timer</button>
+        </div>
+        <div id="step-4" class="step hidden">
+            <h2>Day 2 – 2:00 PM: Shape</h2>
+            <p>Lightly flour surface, divide dough, preshape into boules, bench rest 20 mins.</p>
+            <div id="timer-4" class="timer"></div>
+            <button onclick="startTimerForStep(4)">Start Timer</button>
+        </div>
+        <div id="step-5" class="step hidden">
+            <h2>Day 2 – 2:25 PM: Final Shape</h2>
+            <p>Final shape, place seam-side up in floured banneton.</p>
+            <div id="timer-5" class="timer"></div>
+            <button onclick="startTimerForStep(5)">Start Timer</button>
+        </div>
+        <div id="step-6" class="step hidden">
+            <h2>Day 2 – 4:30 PM: Prove</h2>
+            <p>Prove at ambient temp (23-28°C) until ready, dough should be aerated and slightly risen.</p>
+            <div id="timer-6" class="timer"></div>
+            <button onclick="startTimerForStep(6)">Start Timer</button>
+        </div>
+        <div id="step-7" class="step hidden">
+            <h2>Day 2 – 6:00 PM: Score & Bake</h2>
+            <p>Score dough and bake at 180°C in Dutch oven for 1 hour. Remove lid, bake 5+ mins until deep golden. Cool on a wire rack.</p>
+            <div id="timer-7" class="timer"></div>
+            <button onclick="startTimerForStep(7)">Start Timer</button>
+        </div>
+        <div id="step- Anime8" class="step hidden">
+            <h2>Complete!</h2>
+            <p>Your sourdough bread is ready! Enjoy!</p>
+            <div id="timer-8" class="timer"></div>
+            <button onclick="startTimerForStep(8)">Finish</button>
         </div>
     </div>
 
