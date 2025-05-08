@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -155,6 +116,7 @@
         <div id="step-1" class="step">
             <h2>Day 1 – 10:00 PM: Make Levain</h2>
             <p>Make 90g levain. Rest until next morning.</p>
+            <div id="timer-1" class="timer"></div>
             <button onclick="startTimerForStep(1)">Start Timer</button>
         </div>
         <div id="step-2" class="step hidden">
@@ -193,7 +155,7 @@
             <div id="timer-7" class="timer"></div>
             <button onclick="startTimerForStep(7)">Start Timer</button>
         </div>
-        <div id="step- Anime8" class="step hidden">
+        <div id="step-8" class="step hidden">
             <h2>Complete!</h2>
             <p>Your sourdough bread is ready! Enjoy!</p>
             <div id="timer-8" class="timer"></div>
@@ -222,7 +184,23 @@
                 clearInterval(timerInterval);
             }
 
-            // Hide current step and show next step, unless it's the final step
+            // Handle final step (step 8) to reset to step 1
+            if (step === 8) {
+                // Hide all steps
+                for (let i = 1; i <= 8; i++) {
+                    document.getElementById(`step-${i}`).classList.add('hidden');
+                }
+                // Show first step
+                document.getElementById('step-1').classList.remove('hidden');
+                // Reset current step
+                currentStep = 1;
+                // Clear timer display for step 1
+                const timerDisplay = document.getElementById('timer-1');
+                timerDisplay.textContent = "";
+                return;
+            }
+
+            // Hide current step and show next step
             document.getElementById(`step-${step}`).classList.add('hidden');
             const nextStep = step + 1;
             if (nextStep <= 8) {
@@ -247,9 +225,9 @@
                     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                     timerDisplay.textContent = `${timerData.label}: ${hours}h ${minutes}m ${seconds}s`;
                 }, 1000);
-            } else {
-                // Handle final step (step 8)
-                const timerDisplay = document.getElementById(`timer-${step}`);
+            } else if (step === 7) {
+                // Handle step 7 to show "Process complete!" for step 8
+                const timerDisplay = document.getElementById(`timer-${nextStep}`);
                 timerDisplay.textContent = "Process complete!";
             }
 
