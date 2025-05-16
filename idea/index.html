@@ -1,1 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreams to Wings Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f5f5fa;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6e6e73;
+            --accent-blue: #0071e3;
+            --accent-gradient-start: #4f8cff;
+            --accent-gradient-end: #42c3ff;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        header {
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: var(--background-color);
+        }
+
+        .status-bar-left, .status-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Sections */
+        section {
+            padding: 24px 0;
+            scroll-margin-top: 60px; /* Offset for fixed header */
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding: 0 16px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            padding: 0 16px;
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, var(--accent-gradient-start), var(--accent-gradient-end));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .button-secondary {
+            background: #f5f5f7;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Stats */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Progress */
+        .progress-container {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .progress-value {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #f2f2f7;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-gradient-start), var(--accent-gradient-end));
+            border-radius: 3px;
+        }
+
+        /* Chart */
+        .chart-container {
+            height: 200px;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .chart-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(79, 140, 255, 0.2), rgba(66, 195, 255, 0.05));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            overflow: hidden;
+        }
+
+        .chart-line::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-gradient-start), var(--accent-gradient-end));
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 25'%3E%3Cpath d='M0,25 L0,15 C5,10 10,5 15,15 C20,25 25,15 30,10 C35,5 40,10 45,15 C50,20 55,15 60,10 C65,5 70,10 75,15 C80,20 85,25 90,15 C95,5 100,10 100,15 L100,25 Z' fill='%23000'/%3E%3C/svg%3E");
+            mask-size: 100% 100%;
+        }
+
+        /* List */
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(to right, var(--accent-gradient-start), var(--accent-gradient-end));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .list-content {
+            flex-grow: 1;
+        }
+
+        .list-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .list-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .list-action {
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 8px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            padding: 0 16px;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(to right, var(--accent-gradient-start), var(--accent-gradient-end));
+            border-radius: 50%;
+            margin-right: 16px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            flex-grow: 1;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 24px;
+            left: 12px;
+            width: 2px;
+            height: calc(100% - 24px);
+            background-color: rgba(79, 140, 255, 0.2);
+            z-index: 0;
+        }
+
+        /* Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            background-color: var(--card-bg);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+        }
+
+        .nav-icon {
+            margin-bottom: 4px;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Main content area */
+        .main-content {
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        /* iPhone frame */
+        .iphone-frame {
+            max-width: 375px;
+            margin: 40px auto;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            height: 812px; /* iPhone X/11 Pro height */
+            background-color: white;
+        }
+
+        .iphone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 30px;
+            background-color: #000;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Phase Details */
+        .phase-detail {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Utility classes */
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="iphone-notch"></div>
+        <div class="iphone-screen">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-bar-left">9:41</div>
+                <div class="status-bar-right">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 10.8v6.4c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C15.72 22 14.88 22 13.2 22h-2.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C6 19.72 6 18.88 6 17.2v-6.4c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C8.28 6 9.12 6 10.8 6h2.4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C18 8.28 18 9.12 18 10.8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 19h.01M10 3v3M14 3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zm17 0H4v14h16V5z" fill="currentColor"/>
+                        <path d="M20 9H4M8 3v18M16 3v18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <header>
+                <div class="header-content">
+                    <div class="page-title">Dreams to Wings</div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 21l-4.35-4.35M11 6a5 5 0 1 1 0 10 5 5 0 0 1 0-10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- Project Overview Section -->
+                <section id="overview">
+                    <div class="section-title">Project Overview</div>
+                    <div class="section-subtitle">Recreating aviation history</div>
+                    
+                    <div class="container">
+                        <div class="chart-container card">
+                            <div class="chart-value">28</div>
+                            <div class="chart-bg"></div>
+                            <div class="chart-line"></div>
+                            <div class="text-center" style="position: absolute; bottom: 16px; width: 100%;">DAYS OF JOURNEY</div>
+                        </div>
+                        
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-label">Distance</div>
+                                <div class="stat-value">11,000</div>
+                                <div class="stat-description">Miles traveled</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Phases</div>
+                                <div class="stat-value">5</div>
+                                <div class="stat-description">Project phases</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <div class="card-title">The Mission</div>
+                                <div class="card-subtitle">Dreams to Wings Project</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                The Dreams to Wings project aims to recreate the historic Vickers Vimy aircraft that completed the first flight from England to Australia in 1919. This ambitious project involves detailed engineering, international coordination, specialized manufacturing, and a commemorative journey following the original route.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                This website provides a comprehensive breakdown of the project, from concept to execution, along with a detailed strategy plan, project checklist, and visual elements to guide implementation.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Breakdown -->
+                <section id="breakdown">
+                    <div class="section-title">Project Breakdown</div>
+                    
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Project Analysis</div>
+                                <div class="card-subtitle">Chronological breakdown of components</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 16px;">
+                                A chronological analysis of the Vickers Vimy replica project, including all major components, stakeholders, and technical challenges faced during the original execution.
+                            </p>
+                            
+                            <div class="list-item">
+                                <div class="list-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Phase 1: Research & Planning</div>
+                                    <div class="list-description">Historical documentation gathering and technical specifications analysis</div>
+                                </div>
+                                <a href="#phase1" class="list-action">Details</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Phase 2: Engineering & Design</div>
+                                    <div class="list-description">Creating detailed blueprints and 3D models</div>
+                                </div>
+                                <a href="#phase2" class="list-action">Details</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Phase 3: Manufacturing</div>
+                                    <div class="list-description">Component fabrication and assembly</div>
+                                </div>
+                                <a href="#phase3" class="list-action">Details</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Phase 4: Testing</div>
+                                    <div class="list-description">Safety checks and test flights</div>
+                                </div>
+                                <a href="#phase4" class="list-action">Details</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Phase 5: Journey</div>
+                                    <div class="list-description">The commemorative flight from England to Australia</div>
+                                </div>
+                                <a href="#phase5" class="list-action">Details</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Phase Details -->
+                        <section id="phase1" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Phase 1: Research & Planning</div>
+                                <div class="card-subtitle">First project phase</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                This phase involves gathering all historical documentation, photographs, and technical specifications of the original Vickers Vimy aircraft. The team conducts interviews with aviation historians and experts to ensure historical accuracy.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key activities include:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Historical document collection</li>
+                                <li>Expert interviews</li>
+                                <li>Route planning</li>
+                                <li>Initial budget estimation</li>
+                                <li>Team assembly</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="phase2" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Phase 2: Engineering & Design</div>
+                                <div class="card-subtitle">Second project phase</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                During this phase, the engineering team creates detailed blueprints and 3D models of the aircraft based on the historical documentation. Modern engineering principles are applied while maintaining historical accuracy.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key activities include:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Creating detailed blueprints</li>
+                                <li>3D modeling of all components</li>
+                                <li>Structural analysis</li>
+                                <li>Material selection</li>
+                                <li>Safety modifications</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="phase3" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Phase 3: Manufacturing</div>
+                                <div class="card-subtitle">Third project phase</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                The manufacturing phase involves the fabrication and assembly of all aircraft components according to the engineering specifications. Specialized manufacturing partners are engaged for various components.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key activities include:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Component fabrication</li>
+                                <li>Engine assembly</li>
+                                <li>Airframe construction</li>
+                                <li>Systems integration</li>
+                                <li>Quality control</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="phase4" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Phase 4: Testing</div>
+                                <div class="card-subtitle">Fourth project phase</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                The testing phase ensures the aircraft meets all safety and performance requirements. This includes ground testing, initial flight tests, and certification processes with aviation authorities.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key activities include:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Ground testing</li>
+                                <li>Initial flight tests</li>
+                                <li>Performance optimization</li>
+                                <li>Regulatory certification</li>
+                                <li>Pilot training</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="phase5" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Phase 5: Journey</div>
+                                <div class="card-subtitle">Final project phase</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                The journey phase is the culmination of the project, where the recreated Vickers Vimy aircraft follows the historic route from England to Australia, retracing the steps of the original 1919 flight.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key activities include:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Route preparation</li>
+                                <li>Support team coordination</li>
+                                <li>Media coverage</li>
+                                <li>Public events</li>
+                                <li>Documentation</li>
+                            </ul>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- Strategy Plan -->
+                <section id="strategy">
+                    <div class="section-title">Strategy Plan</div>
+                    
+                    <div class="container">
+                        <div class="tabs" id="strategy-tabs">
+                            <div class="tab active" data-tab="budget">Budget</div>
+                            <div class="tab" data-tab="timeline">Timeline</div>
+                            <div class="tab" data-tab="risks">Risks</div>
+                        </div>
+                        
+                        <div id="budget" class="tab-content active">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Budget Allocation</div>
+                                    <div class="card-subtitle">Funding distribution across project phases</div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-header">
+                                        <div class="progress-label">Research & Development</div>
+                                        <div class="progress-value">20%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-header">
+                                        <div class="progress-label">Materials & Manufacturing</div>
+                                        <div class="progress-value">40%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-header">
+                                        <div class="progress-label">Testing & Certification</div>
+                                        <div class="progress-value">15%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container" style="margin-bottom: 0;">
+                                    <div class="progress-header">
+                                        <div class="progress-label">Journey Execution</div>
+                                        <div class="progress-value">25%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="timeline" class="tab-content">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Project Timeline</div>
+                                    <div class="card-subtitle">5-year implementation plan</div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Year 1: Research & Planning</div>
+                                        <div class="list-description">Documentation gathering and team assembly</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Year 2-3: Engineering & Manufacturing</div>
+                                        <div class="list-description">Component fabrication and assembly</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Year 4: Testing & Certification</div>
+                                        <div class="list-description">Flight testing and regulatory approvals</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Year 5: Journey Execution</div>
+                                        <div class="list-description">The commemorative flight and documentation</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="risks" class="tab-content">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Risk Management</div>
+                                    <div class="card-subtitle">Identifying and mitigating project risks</div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Technical Risks</div>
+                                        <div class="list-description">Mitigation through redundant systems and extensive testing protocols</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Weather Risks</div>
+                                        <div class="list-description">Flexible scheduling and advanced meteorological monitoring</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Financial Risks</div>
+                                        <div class="list-description">Diversified funding sources and phased budget releases</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="list-item">
+                                    <div class="list-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="list-content">
+                                        <div class="list-title">Regulatory Risks</div>
+                                        <div class="list-description">Early engagement with aviation authorities and compliance experts</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Execution Strategy</div>
+                                <div class="card-subtitle">Comprehensive approach to project execution</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                A comprehensive strategy for executing the project, focusing on budget considerations, equipment and materials requirements, timeline planning, and risk management.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Checklist -->
+                <section id="checklist">
+                    <div class="section-title">Project Checklist</div>
+                    
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Quality Control</div>
+                                <div class="card-subtitle">Tracking project milestones and requirements</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 16px;">
+                                A detailed checklist with dependencies, milestones, resource requirements, and quality control checkpoints for each phase of the project.
+                            </p>
+                            
+                            <div class="list-item">
+                                <div class="list-icon" style="background: #4cd964;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m5 13 4 4L19 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Gather historical documentation</div>
+                                    <div class="list-description">Completed</div>
+                                </div>
+                                <a href="#checklist-research" class="list-action">View</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon" style="background: #4cd964;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m5 13 4 4L19 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Interview aviation historians</div>
+                                    <div class="list-description">Completed</div>
+                                </div>
+                                <a href="#checklist-interviews" class="list-action">View</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon" style="background: #4cd964;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m5 13 4 4L19 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Analyze technical specifications</div>
+                                    <div class="list-description">Completed</div>
+                                </div>
+                                <a href="#checklist-specs" class="list-action">View</a>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="list-icon" style="background: rgba(79, 140, 255, 0.2);">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="9" stroke="#4f8cff" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">Create detailed research report</div>
+                                    <div class="list-description">In progress</div>
+                                </div>
+                                <a href="#checklist-report" class="list-action">View</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Checklist Details -->
+                        <section id="checklist-research" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Historical Documentation</div>
+                                <div class="card-subtitle">Research phase checklist item</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                All historical documentation related to the Vickers Vimy aircraft has been collected, including original blueprints, photographs, flight logs, and maintenance records.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Sources included:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>British Aviation Museum archives</li>
+                                <li>Royal Air Force historical records</li>
+                                <li>Australian War Memorial collection</li>
+                                <li>Private collections from aviation enthusiasts</li>
+                                <li>Original manufacturer documentation</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="checklist-interviews" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Aviation Historian Interviews</div>
+                                <div class="card-subtitle">Research phase checklist item</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                Interviews with leading aviation historians and experts have been conducted to gather insights on the historical significance, technical challenges, and cultural context of the original flight.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Key insights gained:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Pilot techniques used in the 1919 era</li>
+                                <li>Navigation methods of the time</li>
+                                <li>Maintenance practices during long journeys</li>
+                                <li>Historical context of the achievement</li>
+                                <li>Public reception and media coverage</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="checklist-specs" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Technical Specifications Analysis</div>
+                                <div class="card-subtitle">Research phase checklist item</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                A comprehensive analysis of the technical specifications of the Vickers Vimy aircraft has been completed, including structural details, materials, engine performance, and aerodynamic properties.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Analysis covered:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Airframe structural analysis</li>
+                                <li>Engine performance characteristics</li>
+                                <li>Material properties and alternatives</li>
+                                <li>Weight and balance calculations</li>
+                                <li>Flight performance envelope</li>
+                            </ul>
+                        </section>
+                        
+                        <section id="checklist-report" class="card">
+                            <div class="card-header">
+                                <div class="card-title">Research Report</div>
+                                <div class="card-subtitle">Research phase checklist item</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                The comprehensive research report is currently being compiled, integrating all findings from the historical documentation, interviews, and technical analysis.
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-top: 12px;">
+                                Report sections in progress:
+                            </p>
+                            <ul style="font-size: 15px; color: var(--text-secondary); margin: 12px 0 0 16px;">
+                                <li>Historical context (90% complete)</li>
+                                <li>Technical specifications (95% complete)</li>
+                                <li>Route analysis (85% complete)</li>
+                                <li>Engineering challenges (80% complete)</li>
+                                <li>Modern adaptations (75% complete)</li>
+                            </ul>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- Visuals Section -->
+                <section id="visuals">
+                    <div class="section-title">Visual Elements</div>
+                    
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Aircraft Specifications</div>
+                                <div class="card-subtitle">Technical details of the Vickers Vimy</div>
+                            </div>
+                            
+                            <img src="https://placeholder.pics/svg/320x180/DEDEDE/555555/Aircraft%20Blueprint" alt="Aircraft Blueprint" style="width: 100%; border-radius: 8px; margin-bottom: 16px;">
+                            
+                            <div class="stats-container">
+                                <div class="stat-card">
+                                    <div class="stat-label">Wingspan</div>
+                                    <div class="stat-value">67 ft</div>
+                                    <div class="stat-description">20.47 meters</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Length</div>
+                                    <div class="stat-value">43 ft</div>
+                                    <div class="stat-description">13.27 meters</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Visual Representations</div>
+                                <div class="card-subtitle">Project visualization aids</div>
+                            </div>
+                            <p style="font-size: 15px; color: var(--text-secondary);">
+                                Visual representations including project timeline, budget breakdown, organizational structure, and construction phase diagrams to aid in project understanding and execution.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Historical Significance -->
+                <section id="historical">
+                    <div class="section-title">Historical Significance</div>
+                    
+                    <div class="container timeline-container">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">The Original Flight</div>
+                                <div class="timeline-description">
+                                    The 1919 England to Australia flight by the Vickers Vimy, piloted by Sir Ross and Sir Keith Smith, was a pioneering achievement in aviation history, covering over 11,000 miles in 28 days.
+                                </div>
+                            </div>
+                            <div class="timeline-line"></div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Engineering Marvel</div>
+                                <div class="timeline-description">
+                                    The Vickers Vimy was a British heavy bomber aircraft that represented cutting-edge technology for its time, with a wingspan of over 67 feet and powered by two Rolls-Royce Eagle VIII engines.
+                                </div>
+                            </div>
+                            <div class="timeline-line"></div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Legacy</div>
+                                <div class="timeline-description">
+                                    This recreation project honors their legacy and brings to life an important piece of aviation history for future generations to appreciate and learn from.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <a href="#overview" class="nav-item active">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Overview
+                </a>
+                <a href="#breakdown" class="nav-item">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Breakdown
+                </a>
+                <a href="#strategy" class="nav-item">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Strategy
+                </a>
+                <a href="#checklist" class="nav-item">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Checklist
+                </a>
+                <a href="#visuals" class="nav-item">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Visuals
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const strategyTabs = document.querySelectorAll('#strategy-tabs .tab');
+            
+            strategyTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    strategyTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Update active state in bottom nav
+                        if (this.classList.contains('nav-item')) {
+                            document.querySelectorAll('.nav-item').forEach(item => {
+                                item.classList.remove('active');
+                            });
+                            this.classList.add('active');
+                        }
+                        
+                        // Scroll to the target element
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Set active nav item based on scroll position
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            function setActiveNavItem() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const scrollPosition = document.querySelector('.iphone-screen').scrollTop;
+                    
+                    if (scrollPosition >= sectionTop - 100 && 
+                        scrollPosition < sectionTop + sectionHeight - 100) {
+                        currentSection = '#' + section.getAttribute('id');
+                    }
+                });
+                
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === currentSection) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+            
+            // Listen for scroll events to update active nav item
+            document.querySelector('.iphone-screen').addEventListener('scroll', setActiveNavItem);
+            
+            // Initial call to set active nav item
+            setActiveNavItem();
+        });
+    </script>
+</body>
+</html>
